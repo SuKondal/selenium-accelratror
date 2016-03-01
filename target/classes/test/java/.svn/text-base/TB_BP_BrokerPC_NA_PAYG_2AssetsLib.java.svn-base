@@ -1,0 +1,81 @@
+package com.root;
+
+
+
+import static org.testng.AssertJUnit.assertEquals;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+public class TB_BP_BrokerPC_NA_PAYG_2AssetsLib extends LocalBusinessFunctions {
+
+	public TB_BP_BrokerPC_NA_PAYG_2AssetsLib() throws FileNotFoundException,
+			IOException {
+		super();
+		
+	}
+	
+	public void Call(WebDriver driver)
+	{
+		
+		String login="", strCustomer="";
+		String strOpp="Fail";
+		boolean bNa=false, bPs=false,bMorApp=false,bFCr=false,bCustInf=false;//, bOpp=false;
+		try 
+		{
+			TB_GG_Report("TB_BP_BrokerPC_NA_PAYG_2AssetsLib","", false);
+			login=TB_LB_Login(driver,2);
+			TB_LB_SetNames();
+			strCustomer = TB_LB_CustomerSearch(driver,2,true);
+			
+			TB_LB_CreateCustomer(driver,1);
+			driver.switchTo().defaultContent();
+			boolean bExist = TB_GG_DoesWebElementExist(driver,By.xpath(prop.getProperty("Btn_CS_SearchAgain")),1000);
+			if(bExist)
+			{	
+				Thread.sleep(5000);
+				driver.findElement(By.xpath(prop.getProperty("Btn_CS_SearchAgain"))).click();
+				Thread.sleep(5000);
+				strCustomer=TB_LB_CustomerSearch(driver,2);
+				
+			}
+			strOpp=TB_LB_CreateOpportunity(driver,1);
+			//bOpp = TB_LB_OpportunityLink(driver);
+			int row = 3;
+			bNa=TB_LB_NeedAnalysis(driver, row,true);///// last optional parameter for double assets and liabilities
+			bPs=TB_LB_ProductSearch(driver,1,false);
+			TB_LB_CompleteApp(driver,row);
+			TB_LB_BrokerCentre(driver,"TB_BP_BrokerPC_NA_PAYG_2AssetsLib");
+			TB_LB_Logout(driver);
+			
+			
+			 if(login.equalsIgnoreCase("Pass") && strCustomer.equalsIgnoreCase("Match Found") && strOpp.equalsIgnoreCase("Pass") && bNa && bPs && bMorApp && bFCr && bCustInf)
+			 {
+				 TB_GG_Report("Final Test Result for TB_BP_BrokerPC_NA_PAYG_2AssetsLib","Pass", false);
+			
+			 }
+			 else
+			 {
+				 TB_GG_Report("Final Test Result for TB_BP_BrokerPC_NA_PAYG_2AssetsLib","Fail", false);
+				 
+			 }
+			 TB_GG_Report("","", true);
+			
+		} 
+		
+		catch (Exception e) 
+		{
+			
+			e.printStackTrace();
+		}
+
+		assertEquals("Pass", login);
+		assertEquals("Match Found", strCustomer);
+		assertEquals("Pass", strOpp);
+		Assert.assertTrue(bNa);
+		Assert.assertTrue(bPs);
+	}
+}

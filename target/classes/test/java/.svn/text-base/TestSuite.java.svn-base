@@ -1,0 +1,422 @@
+package com.root;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import org.testng.SkipException;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
+
+import org.testng.annotations.Test;
+
+
+import org.testng.annotations.AfterClass;
+
+
+public class TestSuite extends LocalBusinessFunctions 
+{
+	//BusinessGlobalFunctions businessF;
+	TB_BP_LoadLivingExp_Serviceability bp0;
+	TB_BP_BrokerNewPC bp1 ;
+	TB_BP_BrokerExistingCOTRPC bp2 ;
+	TB_BP_BrokerExistingCOTRCC bp3 ;
+	TB_BP_BrokerNewCC bp4 ;
+	TB_BP_BrokerPC_NA_Investment_DefactoPAYG bp5 ;
+	TB_BP_BrokerPC_NAOwnerOcc_Single_SelfEmp bp6 ;
+	TB_BP_BrokerCC_NAOwnerOcc_purchase_comp bp15 ;
+	TB_BP_BrokerCC_NATrust_investment_land bp16 ;
+	TB_BP_BrokerPC_NA_PAYG_2AssetsLib bp17 ;
+	TB_BP_BrokerJointSpouse bp7;
+	TB_BP_BrokerJointPC bp8 ;
+	TB_BP_CallCentreNewPC_Allocate_NoCOTR bp9;
+	TB_BP_CallCentreNewCC_allocate_NoCOTR bp10;
+	TB_BP_CallCentreExistingPC bp11;
+	TB_BP_CallCentreExistingCC bp12;
+	TB_BP_AAPRCalculator bp13 ;
+	TB_BP_Calculator_StampDuty_RegTransferFee bp14 ;
+	TB_BP_LivingExpenses bp18;
+	TB_BP_XML_Scenarios bp19;
+	TB_BP_Broker_Joint_Scenarios bp20;
+	TB_BP_Login bpLogin;
+	TB_BP_CreatingProduct bp21;
+	TB_BP_Broker_Guarantor_Scenarios bp22;
+	TB_BP_CreatePersonalCustomer bp23;
+	TB_BP_CreateCompanyCustomer bp24;
+	// Load Serviceability
+	/*public String[][] P_Couple =  new String[8][6];
+	public String[][] P_Single =  new String[8][6];
+	public String[][] F_Couple =  new String[8][6];
+	public String[][] F_Single =  new String[8][6];*/
+	
+	
+	public TestSuite() throws FileNotFoundException, IOException  {
+		super();
+		bp0 = new TB_BP_LoadLivingExp_Serviceability();
+		bp1 = new TB_BP_BrokerNewPC();
+		 bp2 = new TB_BP_BrokerExistingCOTRPC();
+		 bp3 = new TB_BP_BrokerExistingCOTRCC();
+		 bp4 = new TB_BP_BrokerNewCC();
+		 bp5 = new TB_BP_BrokerPC_NA_Investment_DefactoPAYG();
+		 bp6 =  new TB_BP_BrokerPC_NAOwnerOcc_Single_SelfEmp();
+		 bp15 = new TB_BP_BrokerCC_NAOwnerOcc_purchase_comp();
+		 bp16 = new TB_BP_BrokerCC_NATrust_investment_land();
+		 bp17 = new TB_BP_BrokerPC_NA_PAYG_2AssetsLib();
+		 bp7 = new TB_BP_BrokerJointSpouse();
+		 bp8 = new TB_BP_BrokerJointPC();
+		 bp9 = new TB_BP_CallCentreNewPC_Allocate_NoCOTR();
+		 bp10 = new TB_BP_CallCentreNewCC_allocate_NoCOTR();
+		 bp11 = new TB_BP_CallCentreExistingPC();
+		 bp12 = new TB_BP_CallCentreExistingCC();
+		 bp13 = new TB_BP_AAPRCalculator();
+		 bp14 = new TB_BP_Calculator_StampDuty_RegTransferFee();
+		 bp18 = new TB_BP_LivingExpenses();
+		 bpLogin = new TB_BP_Login();
+		 bp19= new TB_BP_XML_Scenarios();
+		 bp20 = new TB_BP_Broker_Joint_Scenarios() ;
+		 bp21 = new TB_BP_CreatingProduct();
+		 bp22 = new TB_BP_Broker_Guarantor_Scenarios();
+		 bp23 = new TB_BP_CreatePersonalCustomer();
+		 bp24 = new TB_BP_CreateCompanyCustomer();	
+		 
+	}
+	
+	@BeforeClass 
+	public void launchDriver() throws FileNotFoundException, IOException
+	{
+		
+		
+	}
+	
+	//////Login BP is for testing
+	//@BeforeSuite(alwaysRun = true)
+	@Test 
+		public void TB_BP_LoadLivingExp_Serviceability() 
+		{
+			 /*if(TB_GG_VerifyExecution("TB_BP_LoadLivingExp_Serviceability"))
+			 {
+				 driver=TB_GG_LaunchApplication();	
+				 bp0.Call(driver);
+			 } 
+			 else	 throw new SkipException("Skipping Test: TB_BP_LoadLivingExp" );*/
+		}
+	
+	 @Test 
+		public void TB_BP_Login() 
+		{
+			 if(TB_GG_VerifyExecution("TB_BP_Login"))
+			 {
+				 driver=TB_GG_LaunchApplication();	
+				 bpLogin.Call(driver);
+			 } 
+			 else	 throw new SkipException("Skipping Test: TB_BP_Login " );
+		}
+	
+	
+	@Test
+	public void Test_BrokerNewPC() 
+	{
+		 if(TB_GG_VerifyExecution("TB_BP_BrokerNewPC"))
+		 {
+			 driver=TB_GG_LaunchApplication();	
+			 bp1.Call(driver);
+		 }
+		 else	 throw new SkipException("Skipping Test: Test_BrokerNewPC " );
+	}
+	
+	 @Test
+	public void Test_BrokerNewCC()
+	{
+		if(TB_GG_VerifyExecution("TB_BP_BrokerNewCC"))
+		{	
+			driver=TB_GG_LaunchApplication();	
+			bp4.Call(driver);
+		}
+		else	 throw new SkipException("Skipping Test: Test_BrokerNewCC " );
+	}
+	 
+	 @Test
+	public void Test_BrokerExistingPC() 
+	{
+		 if(TB_GG_VerifyExecution("TB_BP_BrokerExistingCOTRPC"))
+		 {	
+			driver=TB_GG_LaunchApplication();	
+			bp2.Call(driver);
+		}
+			
+		 else	 throw new SkipException("Skipping Test: Test_BrokerExistingPC " );
+	}
+	
+	 @Test
+	public void Test_BrokerExistingCC()
+	{
+		 if(TB_GG_VerifyExecution("TB_BP_BrokerExistingCOTRCC"))
+		 {	
+				driver=TB_GG_LaunchApplication();	
+				bp3.Call(driver);
+		 }
+		 else	 throw new SkipException("Skipping Test: Test_BrokerExistingCC" );
+	}
+	
+	 @Test
+	public void Test_BrokerPC_NAOwnerOcc_Single_SelfEmp() 
+	{ 
+		if(TB_GG_VerifyExecution("TB_BP_BrokerPC_NAOwnerOcc_Single_SelfEmp"))
+		{	
+			driver=TB_GG_LaunchApplication();	
+			bp6.Call(driver);
+		}
+		else	 throw new SkipException("Skipping Test: Test_BrokerPC_NAOwnerOcc_Single_SelfEmp " );
+	}
+	 @Test
+	public void Test_BrokerPC_NA_Investment_DefactoPAYG() 
+	{	 
+		 if(TB_GG_VerifyExecution("TB_BP_BrokerPC_NA_Investment_DefactoPAYG"))
+		 {	
+			 driver=TB_GG_LaunchApplication();	
+			 bp5.Call(driver);
+		 }
+        
+	else	 throw new SkipException("Skipping Test: Test_BrokerPC_NA_Investment_DefactoPAYG " );
+	}
+	
+	 @Test
+	 public void Test_BrokerCC_NAOwnerOcc_purchase_comp() 
+	 {
+		if(TB_GG_VerifyExecution("TB_BP_BrokerCC_NAOwnerOcc_purchase_comp"))
+			 
+			 {	
+				 driver=TB_GG_LaunchApplication();	
+				 bp15.Call(driver);
+			 }
+		else	 throw new SkipException("Skipping Test: Test_BrokerCC_NAOwnerOcc_purchase_comp" );
+	
+	 }	
+	@Test
+	 public void Test_BrokerCC_NATrust_investment_land() 
+	 {
+		if(TB_GG_VerifyExecution("TB_BP_BrokerCC_NATrust_investment_land"))
+			
+			 {	
+				 driver=TB_GG_LaunchApplication();	
+				 bp16.Call(driver);
+			 }
+			
+		else	 throw new SkipException("Skipping Test: Test_BrokerCC_NATrust_investment_land" );
+	
+	 }	
+	@Test
+	 public void Test_BrokerPC_NA_PAYG_2AssetsLib()
+	 {
+		if(TB_GG_VerifyExecution("TB_BP_BrokerPC_NA_PAYG_2AssetsLib"))
+			 
+			 {	
+				 driver=TB_GG_LaunchApplication();	
+				 bp17.Call(driver);
+			 }
+		else	 throw new SkipException("Skipping Test: Test_BrokerPC_NA_PAYG_2AssetsLib" );
+	
+	 }	
+	 @Test
+	public void Test_BrokerJointPC()  
+	{ 
+		 if(TB_GG_VerifyExecution("TB_BP_BrokerJointPC"))
+			
+			 {	
+				 driver=TB_GG_LaunchApplication();	
+				 bp8.Call(driver);
+			 }
+		 else	 throw new SkipException("Skipping Test: Test_BrokerJointPC " );
+	}
+	 @Test
+	 public void Test_BrokerJointSpouse() 
+	 {
+		 if(TB_GG_VerifyExecution("TB_BP_BrokerJointSpouse"))
+			 
+			 {	
+				 driver=TB_GG_LaunchApplication();	
+				 bp7.Call(driver);
+			 }
+		 else	 throw new SkipException("Skipping Test: Test_BrokerJointSpouse" );
+	
+	 }	
+	 @Test
+	 public void Test_CallCentreNewPC_Allocate_NoCOTR() 
+	 {
+	if(TB_GG_VerifyExecution("TB_BP_CallCentreNewPC_Allocate_NoCOTR"))
+		 
+		 {	
+			 driver=TB_GG_LaunchApplication();	
+			 bp9.Call(driver);
+		 }
+	else	 throw new SkipException("Skipping Test: Test_CallCentreNewPC_Allocate_NoCOTR" );
+	
+	 }	
+	 @Test
+	 public void Test_CallCentreNewCC()
+	 {
+		if(TB_GG_VerifyExecution("TB_BP_CallCentreNewCC_allocate_NoCOTR"))
+			 
+			 {	
+				 driver=TB_GG_LaunchApplication();	
+				 bp10.Call(driver);
+			 }
+		else	 throw new SkipException("Skipping Test: Test_CallCentreNewCC" );
+	
+	 }	
+	@Test
+	 public void Test_CallCentreExistingPC() 
+	 {
+		if(TB_GG_VerifyExecution("TB_BP_CallCentreExistingPC"))
+			 
+			 {	
+				 driver=TB_GG_LaunchApplication();	
+				 bp11.Call(driver);
+			 }
+		else	 throw new SkipException("Skipping Test: Test_CallCentreExistingPC" );
+	
+	 }	
+	@Test
+	 public void Test_CallCentreExistingCC() 
+	 {
+		if(TB_GG_VerifyExecution("TB_BP_CallCentreExistingCC"))
+			
+			 {	
+				 driver=TB_GG_LaunchApplication();	
+				 bp12.Call(driver);
+			 }
+		else	 throw new SkipException("Skipping Test: Test_CallCentreExistingCC" );
+	
+	 }	
+	@Test
+	 public void Test_AAPRCalculator() 
+	 {
+		if(TB_GG_VerifyExecution("TB_BP_AAPRCalculator"))
+			 
+			 {	
+				 driver=TB_GG_LaunchApplication();	
+				 bp13.Call(driver);
+			 }
+		
+		else	 throw new SkipException("Skipping Test: Test_AAPRCalculator" );
+	
+	 }	
+	@Test
+	 public void Test_Calculator_StampDuty_RegTransferFee() 
+	 {
+		if(TB_GG_VerifyExecution("TB_BP_Calculator_StampDuty_RegTransferFee"))
+			
+			 {	
+				 driver=TB_GG_LaunchApplication();	
+				 bp14.Call(driver);
+			 }
+		
+		else	 throw new SkipException("Skipping Test: Test_Calculator_StampDuty_RegTransferFee" );
+	
+	 }	
+	
+	@Test
+	 public void Test_LivingExpensesCalculations() 
+	 {
+		if(TB_GG_VerifyExecution("TB_BP_LivingExpenses"))
+			
+			 {	
+				 driver=TB_GG_LaunchApplication();	
+				 bp18.Call(driver);
+			 }
+		
+		else	 throw new SkipException("Skipping Test: Test_LivingExpensCalculations" );
+	
+	 }	
+	@Test
+	 public void Test_XML_Scenarios() 
+	 {
+		if(TB_GG_VerifyExecution("Broker: System Test 1"))
+			
+			 {	
+				 driver=TB_GG_LaunchApplication();	
+				 bp19.Call(driver);
+			 }
+		
+		else	 throw new SkipException("Skipping Test: Broker: System Test 1" );
+	
+	 }	
+	@Test
+	 public void TB_BP_Broker_Joint_Scenarios() 
+	 {
+		if(TB_GG_VerifyExecution("Broker: System Test 2"))
+			
+			 {	
+				 driver=TB_GG_LaunchApplication();	
+				 bp20.Call(driver);
+			 }
+		
+		else	 throw new SkipException("Skipping Test: Broker: System Test 2" );
+	
+	 }	
+	 @Test
+	 public void TB_BP_CreatingProduct() 
+	 {
+		if(TB_GG_VerifyExecution("TB_BP_CreatingProduct"))
+			
+			 {	
+				 driver=TB_GG_LaunchApplication();	
+				 bp21.Call(driver);
+			 }
+		
+		else	 throw new SkipException("Skipping Test: TB_BP_CreatingProduct" );
+	
+	 }	
+	 @Test
+	 public void TB_BP_Broker_Guarantor_Scenarios() 
+	 {
+		if(TB_GG_VerifyExecution("Broker: System Test 3"))
+			
+			 {	
+				 driver=TB_GG_LaunchApplication();	
+				 bp22.Call(driver);
+			 }
+		
+		else	 throw new SkipException("Skipping Test: Broker: System Test 3" );
+	
+	 }	
+	 @Test
+	 public void TB_BP_CreatePersonalCustomer() 
+	 {
+		if(TB_GG_VerifyExecution("TB_BP_CreatePersonalCustomer"))
+			
+			 {	
+				 driver=TB_GG_LaunchApplication();	
+				 bp23.Call(driver);
+			 }
+		
+		else	 throw new SkipException("Skipping Test: TB_BP_CreatePersonalCustomer" );
+	
+	 }
+	 @Test
+	 public void TB_BP_CreateCompanyCustomer() 
+	 {
+		if(TB_GG_VerifyExecution("TB_BP_CreateCompanyCustomer"))
+			
+			 {	
+				 driver=TB_GG_LaunchApplication();	
+				 bp24.Call(driver);
+			 }
+		
+		else	 throw new SkipException("Skipping Test: TB_BP_CreateCompanyCustomer" );
+	
+	 }
+  @AfterTest
+  public void afterMethod() {
+	//if(!driver.equals(null)) driver.quit();
+	  
+  }
+
+ 
+
+  @AfterClass
+  public void afterClass() {
+	  
+	  //driver.quit();
+  }
+
+}

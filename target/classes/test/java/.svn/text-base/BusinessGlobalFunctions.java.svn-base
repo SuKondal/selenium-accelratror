@@ -1,0 +1,211 @@
+package com.root;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class BusinessGlobalFunctions  
+{
+	
+	int intTimeOutForPaging = 5000;
+	String oppNo="";
+	
+	// customer
+	boolean admin;
+	Map<String, String> cust;
+	Map<String, String> meetingDetails;
+	Map<String, String> customerDetails;
+	Map<String, String> occupationAndIncome;
+	Map<String, String> expenses;
+	Map<String, String> assetsAndLiab;
+	Map<String, Double> grossIncome;
+	Map<String, String[][]> livingExp;
+	public void setOpp(String opp)
+	{
+		this.oppNo = opp;
+	}
+	public BusinessGlobalFunctions() 
+	{
+		cust  = new HashMap<String, String>();
+		meetingDetails  = new HashMap<String, String>();
+		customerDetails  = new HashMap<String, String>();
+		occupationAndIncome  = new HashMap<String, String>();
+		expenses  = new HashMap<String, String>();
+		assetsAndLiab  = new HashMap<String, String>();
+		
+		meetingDetails.put("LoanPurpose", "");
+		meetingDetails.put("LoanReason", "");
+		meetingDetails.put("TotLaonAmount", "" );	
+		
+		occupationAndIncome.put("IncomeStatus", "");
+		occupationAndIncome.put("CommissionsBonus", "");
+		occupationAndIncome.put("BaseSalary", "" );
+		occupationAndIncome.put("OverTime", "" );	
+		occupationAndIncome.put("AverageIncome", "" );
+		occupationAndIncome.put("CompOwned", "" ); 
+		occupationAndIncome.put("AverageIncome", "" );
+		occupationAndIncome.put("CompOwned", "" );
+		occupationAndIncome.put("Investments", "" );
+		occupationAndIncome.put("SSGovPension", "" );
+		occupationAndIncome.put("FamilyAllowance", "" );
+		occupationAndIncome.put("PropRentIncome", "");
+
+		assetsAndLiab.put("AssetType1", ""); 
+		assetsAndLiab.put("AssPercentage1", "");
+		assetsAndLiab.put("AssPercentageJoint1", "");
+		assetsAndLiab.put("AssetValue1", "");
+		assetsAndLiab.put("CurrentGrossRentalIncome1", "");
+		assetsAndLiab.put("AssetType2", ""); 
+		assetsAndLiab.put("AssPercentage2", "");
+		assetsAndLiab.put("AssPercentageJoint2", "");
+		assetsAndLiab.put("AssetValue2", "");
+		assetsAndLiab.put("CurrentGrossRentalIncome2", ""); 
+		assetsAndLiab.put("LiabPercentage1", "");
+		assetsAndLiab.put("LiabPercentageJoint1", "");
+		assetsAndLiab.put("LiabType1", "");
+		assetsAndLiab.put("OutStandingBal1", "");
+		assetsAndLiab.put("LiabPercentage2", "");
+		assetsAndLiab.put("LiabPercentageJoint2", "");
+		assetsAndLiab.put("LiabType2", "");
+		assetsAndLiab.put("OutStandingBal2", "");    
+		
+	}
+	
+	public void TB_BG_SetCustomer(String type, String fName, String lName, String entity)
+	{
+		
+		cust.put("type", type);
+		cust.put("fName", fName);
+		cust.put("lName", lName);
+		cust.put("entity", entity );
+	}
+	
+	public void TB_BG_SetCustomerId(String id)
+	{
+		cust.put("custId", id);
+	}
+	
+	public void TB_BG_SetMeetingDetails(String strLP ,String strLR ,String strLA) 
+	{
+		meetingDetails.put("LoanPurpose", strLP);
+		meetingDetails.put("LoanReason", strLR);
+		meetingDetails.put("TotLaonAmount", strLA );				
+	}
+	
+	public void TB_BG_TotalSecurityValue(String tsv)
+	{
+		meetingDetails.put("TotalSecurityValue", tsv);
+	}
+	
+	public void TB_BG_SetApplicantClass(String AC)
+	{
+		customerDetails.put("ApplicantClass", AC);
+	}
+	public void TB_BG_SetApplicantType(String AT)
+	{
+		customerDetails.put("ApplicantType", AT);
+	}
+	public void TB_BG_SetCustomerDetails_P( String strST ,String strMS, String strPE, String strDep) 
+	{
+		
+		//customerDetails.put("strAppType", strAT);
+		customerDetails.put("State", strST);
+		customerDetails.put("MaritalStatus", strMS );
+		customerDetails.put("PartnerEmp", strPE );
+		customerDetails.put("NumDependents", strDep );
+
+	}
+	
+	public void TB_BG_SetCustomerDetails_C(String strYT, String strYR) 
+	{
+		customerDetails.put("YearsTrading", strYT );
+		customerDetails.put("YearsABNRegistered", strYR );
+	}
+	
+
+	public void TB_BG_SetOccuIncome_PAYGE(String strIS ,String strBS, String strOT,String strCB) 
+	{
+		
+		occupationAndIncome.put("IncomeStatus", strIS);
+		occupationAndIncome.put("CommissionsBonus", strCB);
+		occupationAndIncome.put("BaseSalary", strBS );
+		occupationAndIncome.put("OverTime", strOT );	
+		//occupationAndIncome.put("AverageIncome", "0" );
+		//occupationAndIncome.put("CompOwned", "0" );
+		
+	}
+	
+	public void TB_BG_SetOccuIncome_SelfEmp( String strAI, String strCO)
+	{
+		occupationAndIncome.put("AverageIncome", strAI );
+		occupationAndIncome.put("CompOwned", strCO );
+	}
+	
+	public void TB_BG_SetAdditionIncome(String strInv, String strGP,String strFA ,String strPRI)
+	{
+		occupationAndIncome.put("Investments", strInv );
+		occupationAndIncome.put("SSGovPension", strGP );
+		occupationAndIncome.put("FamilyAllowance", strFA );
+		occupationAndIncome.put("PropRentIncome", strPRI);
+	}
+	
+	public void TB_BG_SetExpenses(String strAO, String strAOJoint,String strET , String strEA) 
+	{
+		expenses.put("ApplcntOwned", strAO); 	
+		expenses.put("ApplcntOwnedJoint", strAOJoint); 	
+		expenses.put("ExpType", strET); 	
+		expenses.put("ExpAmount", strEA);
+	}
+	
+	public void TB_BG_SetAssets(int assetsNo, String strAT ,String strAP, String strAPJoint, String strAV ,String strGRI) 
+	{
+		if(assetsNo==1)
+		{
+			assetsAndLiab.put("AssetType1", strAT); 
+			assetsAndLiab.put("AssPercentage1", strAP);
+			assetsAndLiab.put("AssPercentageJoint1", strAPJoint);
+			assetsAndLiab.put("AssetValue1", strAV);
+			assetsAndLiab.put("CurrentGrossRentalIncome1", strGRI); 
+		}
+		else if( assetsNo== 2)
+		{
+			assetsAndLiab.put("AssetType2", strAT); 
+			assetsAndLiab.put("AssPercentage2", strAP);
+			assetsAndLiab.put("AssPercentageJoint2", strAPJoint);
+			assetsAndLiab.put("AssetValue2", strAV);
+			assetsAndLiab.put("CurrentGrossRentalIncome2", strGRI); 
+		}
+	}
+	
+	public void TB_BG_SetLiab(int liabNo ,String strLP, String strLPJoint, String strLT ,String strOSB )
+	{
+		if(liabNo == 1)
+		{
+			assetsAndLiab.put("LiabPercentage1", strLP);
+			assetsAndLiab.put("LiabPercentageJoint1", strLPJoint);
+			assetsAndLiab.put("LiabType1", strLT);
+			assetsAndLiab.put("OutStandingBal1", strOSB);
+		}
+		else if (liabNo == 2)
+		{
+			assetsAndLiab.put("LiabPercentage2", strLP);
+			assetsAndLiab.put("LiabPercentageJoint2", strLPJoint);
+			assetsAndLiab.put("LiabType2", strLT);
+			assetsAndLiab.put("OutStandingBal2", strOSB);
+		}
+	}
+	public void TB_BG_SetGrossInCome(double d)
+	{
+		grossIncome.put("grossIncome", d);
+	}
+	
+	public void setLivingExp(String Pc[][],String Ps[][],String Fc[][],String Fs[][])
+	{
+		 livingExp.put("P_Couple", Pc);
+		 livingExp.put("P_Single", Ps);
+		 livingExp.put("F_Couple", Fc);
+		 livingExp.put("P_Single", Fs);
+	}
+	
+}
+
+

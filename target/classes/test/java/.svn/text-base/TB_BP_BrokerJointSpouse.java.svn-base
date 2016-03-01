@@ -1,0 +1,80 @@
+package com.root;
+
+import static org.testng.AssertJUnit.assertEquals;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+
+public class TB_BP_BrokerJointSpouse extends LocalBusinessFunctions{
+	
+	
+	public TB_BP_BrokerJointSpouse() throws FileNotFoundException,
+	IOException {
+super();
+
+}
+
+public void Call(WebDriver driver)
+{
+	String login="", strCustomer="";
+	String strOpp="Fail";
+	boolean bNa=false,bPs=false,bMorApp=false,bFCr=false,bCustInf=false;;//, bOpp=false;
+	boolean bAddcust=false;
+
+	try
+	{
+		
+		TB_GG_Report("TB_BP_BrokerJointSpouse","", false);
+		login=TB_LB_Login(driver,2);
+		strCustomer=TB_LB_CustomerSearch(driver,3 );
+		TB_LB_OpportunityLink(driver);
+		//strOpp=TB_LB_CreateOpportunity(driver,1);
+		bAddcust=TB_LB_AddCustomerToOpp(driver, 4);
+	    bNa=TB_LB_JointNeedAnalysis(driver,9,true);///////Spouse rows
+		
+		bPs=TB_LB_ProductSearch(driver, 3,false);
+		bCustInf = TB_LB_CustomerInformationAppJoint(driver, 1);
+		bMorApp = TB_LB_MortgageApp(driver, 1);
+		bFCr = TB_LB_FinalCapacityToRepay(driver);
+		
+		TB_LB_Logout(driver);
+		
+		System.out.println("Login:" + login);
+		System.out.println("Search Customer:" + strCustomer);
+		System.out.println("Edit Opp:" + strOpp);
+		System.out.println("Add Cust:" + bAddcust);
+	
+		System.out.println("NA:" + bNa);
+		System.out.println("PS:" + bPs);
+		
+		
+		 if(login.equalsIgnoreCase("Pass") && strCustomer.equalsIgnoreCase("Match Found") && strCustomer.equalsIgnoreCase("Match Found") && bNa && bPs && bAddcust&& bMorApp && bFCr && bCustInf)
+		 
+		 {
+			 TB_GG_Report("Final Test Result for TB_BP_BrokerJointSpouse","Pass", false);
+		
+		 }
+		 else
+		 {
+			 TB_GG_Report("Final Test Result for TB_BP_BrokerJointSpouse","Fail", false);
+			 
+		 }
+		 TB_GG_Report("","", true);
+		
+	}
+	catch (Exception e) 
+	{
+		
+		e.printStackTrace();
+	}
+
+	assertEquals("Pass", login);
+	assertEquals("Match Found", strCustomer);
+	assertEquals("Pass", strOpp);
+	Assert.assertTrue(bAddcust);
+	Assert.assertTrue(bNa);
+	Assert.assertTrue(bPs);
+}
+}

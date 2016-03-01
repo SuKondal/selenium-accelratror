@@ -1,0 +1,30 @@
+package com.root;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.openqa.selenium.WebDriver;
+
+public class TB_BP_LoadLivingExp_Serviceability extends LocalBusinessFunctions 
+{
+	public TB_BP_LoadLivingExp_Serviceability() throws FileNotFoundException,
+	IOException 
+	{
+		super();
+
+	}
+
+	public  void Call(WebDriver driver)
+	{
+		boolean bRes = false;
+		TB_GG_Report("TB_BP_LoadLivingExp_Serviceability","", false);
+		//String stepName, stepRes;
+		TB_LB_Login(driver,7); // login as admin
+		//load Living Expenses form product hub
+		bRes =TB_LB_LoadLivingExp(driver);
+		if(bRes)
+			TB_GG_Report("Final Test Result for TB_BP_LivingExpenses","Pass", false);
+		else
+			TB_GG_Report("Final Test Result for TB_BP_LivingExpenses","Fail", false);
+	} 
+}

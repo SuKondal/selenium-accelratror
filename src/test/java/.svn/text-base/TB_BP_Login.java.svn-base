@@ -1,0 +1,44 @@
+package com.root;
+
+import static org.testng.AssertJUnit.assertEquals;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import org.openqa.selenium.WebDriver;
+
+public class TB_BP_Login extends LocalBusinessFunctions{
+
+	public TB_BP_Login() throws FileNotFoundException, IOException {
+		super();
+	
+	}
+
+	public boolean Call(WebDriver driver)
+	{
+		String login ="",logout="";
+		boolean bResult=false;
+		TB_GG_Report("TB_BP_Login","", false);	
+		login=TB_LB_Login(driver,2);
+		TB_GG_Wait();
+		logout = TB_LB_Logout(driver);
+		if(login.equalsIgnoreCase("Pass") && logout.equalsIgnoreCase("Pass"))
+		{
+			bResult=true;
+			TB_GG_Report("Final Test Result for TB_BP_Login","Pass", false);
+		}
+		else
+			 TB_GG_Report("Final Test Result for TB_BP_Login","Fail", false);
+			 TB_GG_Report("","", true);
+			
+			{
+				assertEquals("Login:"+login,"Pass", login);
+				assertEquals("Logout:"+logout,"Pass", logout);
+			}
+			/*catch(Throwable e)
+			{
+				e.getCause();
+				
+			}*/
+		return bResult;
+	}
+}

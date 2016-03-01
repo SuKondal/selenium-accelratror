@@ -1,0 +1,244 @@
+package com.root;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.annotations.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterClass;
+
+public class TB_TestSuite extends LocalBusinessFunctions {
+ 
+	
+	TB_TestSuite() throws FileNotFoundException, IOException  {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	@BeforeMethod
+  public void beforeMethod() throws FileNotFoundException, IOException  {
+		
+		driver=TB_GG_LaunchApplication();
+  }
+
+  @Test
+  public void Test_ToolBox() throws IOException {
+	
+	  /*TB_BP_BrokerNewPC bp1 = new TB_BP_BrokerNewPC();
+	bp1.Call(driver);
+	
+	TB_BP_BrokerExistingPC bp2 = new TB_BP_BrokerExistingPC();
+	bp2.Call(driver);
+	 TB_BP_BrokerNewCC bp4 = new TB_BP_BrokerNewCC();
+	bp4.Call(driver);*/
+
+	//TB_BP_BrokerExistingCC bp3 = new TB_BP_BrokerExistingCC();
+//	bp3.Call(driver);
+	
+
+	
+	  
+	  /* TB_BP_BrokerCC_NAOwnerOcc_purchase_comp bp3 = new TB_BP_BrokerCC_NAOwnerOcc_purchase_comp();
+	  bp3.Call(driver);
+	  TB_BP_CallCentreNewPC bp2 = new TB_BP_CallCentreNewPC();
+	bp2.Call(driver);
+	TB_GG_Report("", "PASS", false) ;
+	  TB_BP_CallCentreNewCC bp4 = new TB_BP_CallCentreNewCC();
+	  bp4.Call(driver);
+	TB_BP_BrokerPC_NAOwnerOcc_Single_SelfEmp  bp3 = new TB_BP_BrokerPC_NAOwnerOcc_Single_SelfEmp();
+	bp3.Call(driver);*/
+	
+	 
+	
+
+	
+/*	
+	 for(int i=44;  i<=44; i++) // 1 to 7 Personal, 9 to 13 Company
+		{
+			System.out.println("Running for row: " );
+			String login="", strCustomer="";
+			String strOpp="Fail";
+			
+			boolean  bNa=false, bPs=false, bApp=false, bBC= false, bAddcust;
+			try 
+			{
+				
+				login=TB_LB_Login(driver,2);
+				strCustomer=TB_LB_CustomerSearch(driver, 6);
+				//strOpp=TB_LB_CreateOpportunity(driver,1);
+				TB_LB_OpportunityLink(driver);
+				TB_GG_Wait(7000);
+				//TB_LB_EditNA(driver);
+				TB_LB_ProceedToApp(driver);
+
+		//		bAddcust=TB_LB_AddCustomerToOpp(driver, 9);
+				bNa=TB_LB_JointNeedAnalysis(driver,i,false,"TB_DFL_NeedAnalysisXML.xls");
+				
+				//if(bNa)
+				{	
+				//bPs=TB_LB_ProductSearch(driver, i,false,"TB_DFL_NeedAnalysisXML.xls");
+			//	if(bPs)
+						{
+							
+							bApp = TB_LB_CompleteApp(driver, 2);
+							bBC= TB_LB_BrokerCentre(driver,"BP");
+						}
+					}
+					
+				
+				//TB_LB_Logout(driver);
+				 if(login.equalsIgnoreCase("Pass") && strCustomer.equalsIgnoreCase("Match Found")&& strCustomer.equalsIgnoreCase("Pass")  && strOpp.equalsIgnoreCase("Pass")  && bNa && bPs && bApp && bBC)
+				 {
+					 TB_GG_Report("Test Result for TB_BP_Broker_Scenario: ","Pass", false);
+				
+				 }
+				 else
+				 {
+					 TB_GG_Report("Test Result for TB_BP_Broker_Scenario: ","Fail", false);
+					 //	driver.quit();
+					//	driver = TB_GG_LaunchApplication();
+					
+				 }
+				 TB_GG_Report("","", true);
+				
+					
+			} 
+			
+			catch (Exception e) 
+			{
+				
+				e.printStackTrace();
+			}
+		
+		}*/
+	// action.sendKeys(Keys.ALT.DOWN);
+	
+	// action.sendKeys(Keys.ALT).perform();
+	// action.sendKeys(Keys.F3).perform();
+	// action.sendKeys(Keys.F10).perform();
+	/* TB_GG_Wait(7000);
+	 action.sendKeys(Keys.DOWN).perform();
+	 action.sendKeys(Keys.DOWN).perform();
+	 action.sendKeys(Keys.DOWN).perform();
+	 action.sendKeys(Keys.DOWN).perform();
+	 action.sendKeys(Keys.DOWN).perform();
+	 action.sendKeys(Keys.DOWN).perform();
+	/* action.sendKeys(Keys.DOWN).perform();
+	 action.sendKeys(Keys.DOWN).perform();
+	 action.sendKeys(Keys.ENTER).perform();
+	 action.sendKeys("VeryVeryVeryGood");
+	 action.sendKeys(Keys.ENTER).perform();*/
+	// action.keyUp(Keys.ALT);
+	// TB_GG_Wait();*/
+	// 
+	/*TB_LB_CustomerSearch(driver, 4);
+=======
+	TB_GG_Report("", "PASS", false) ;*/
+	//TB_LB_LoadLivingExp(driver);
+	/*TB_LB_Login(driver,2);
+	TB_LB_CustomerSearch(driver, 10);
+>>>>>>> .r18880
+	TB_LB_OpportunityLink(driver);*/
+	
+	//TB_LB_ProceedToApp(driver);
+	//TB_LB_ProductSearch( driver, 1,false);
+//	TB_LB_GotToBrokerCentre( driver, 1);
+	 //TB_LB_ProductSearch(driver, 1, false);
+	// TB_GG_Click(driver, By.xpath(".//*[@id='need-analysis-left-menu']/div[3]/ul/li[1]/ul/li[1]/a"), "strObjectName");
+	 //TB_LB_CustomerInfromationApp1(driver, 1);
+	  //TB_LB_MortgageApp(driver, 1);
+	//TB_LB_EditNA(driver);
+	//TB_LB_NeedAnalysis(driver, 2,false);
+	//TB_LB_ProductSearch(driver, 2,false);
+/*	TB_LB_CustomerInfromationApp(driver, 1);
+	TB_LB_MortgageApp(driver, 1);
+	TB_LB_FinalCapacityToRepay(driver);*/
+	//CreateOpportunity(driver, 1);
+/*	TB_LB_Logout(driver);
+	TB_GG_Wait();
+	TB_LB_Login(driver,3);
+	TB_LB_CustomerSearch(driver, 5);
+>>>>>>> .r17586
+	TB_LB_COTR(driver, 1);
+	TB_GG_Wait();
+	TB_LB_Logout(driver);
+	TB_LB_Login(driver,2);
+	TB_LB_CustomerSearch(driver, 5);
+	boolean bExist=TB_GG_DoesWebElementExist(driver, By.xpath(prop.getProperty("Img_COTR_PadLock")), intTimeOutForPaging);
+	if(bExist)
+	{	
+		String strStepdetail="PadLock is available";
+		TB_GG_Report(strStepdetail, "Pass", true);
+	
+	}
+	*/
+	
+	//TB_LB_EditNA(driver);
+	//capturing javascript generated customer id
+	/*String[] custs=new String[5];
+	custs=TB_LB_GetCustomerID(driver,By.xpath(prop.getProperty("Dlst_NA_PrfContact")),intTimeOutForPaging);
+	String custId=custs[0];
+	String strFile=TB_GG_SetInputFile("TB_DFL_NeedAnalysis.xls");
+	TB_GG_Log("Customer Id for given session is:" + custId);
+	if(custs.length>1) 
+		{
+			strCustIdJoint=custs[1];
+			TB_GG_Log("Customer Id for Joint customer is:" + strCustIdJoint);
+		}
+	//PreliminaryCapacityToRepay
+	//TB_GG_Wait(30000);
+	//driver.findElement(By.xpath(prop.getProperty("Btn_NA_PriCapacity"))).click();
+	TB_GG_Wait(7000);
+	TB_GG_WaitAnElementDisappears(driver,By.tagName("img").name("/images/bigloading.gif"),30000);
+	TB_GG_Click(driver,By.id("PreliminaryCapacityToRepayId"), "Estimated Funds");
+	//driver.findElement(By.id("PreliminaryCapacityToRepayId")).click();
+	TB_GG_Wait(7000);
+	TB_GG_WaitAnElementDisappears(driver,By.tagName("img").name("/images/bigloading.gif"),30000);
+	//if page not opened click again
+	if(!TB_GG_DoesWebElementExist(driver, (By.id(prop.getProperty("Dlst_NA_LoanTermYearID"))), intTimeOutForPaging))
+	{
+		TB_GG_Click(driver,By.id("PreliminaryCapacityToRepayId"), "Estimated Funds");
+		System.out.println("Clicked again");
+		TB_GG_Wait(30000);
+	}
+//function call		
+	TB_LB_PreliminaryCapacityToRepay(driver,2,strFile);
+	//check and report
+	TB_LB_CheckGreenTick(driver,"Lb_NA_preliminaryTickID","Preliminary Capacity To Repay");	*/		
+	TB_LB_Login(driver,2);
+	TB_LB_CustomerSearch(driver, 19);
+	TB_LB_OpportunityLink(driver);
+	//TB_LB_NeedAnalysis(driver, 2);
+	//TB_LB_ClickProduct( driver,1);
+
+	 TB_LB_ProceedToApp(driver);
+	 // TB_LB_ProductSearch(driver, 1, false);
+	 TB_GG_Click(driver, By.xpath(".//*[@id='need-analysis-left-menu']/div[3]/ul/li[1]/ul/li[1]/a"), "strObjectName");
+	 TB_LB_CompleteApp(driver, 3);
+	 TB_LB_BrokerCentre(driver,"BP_ID 03");
+	 /*TB_LB_CustomerInformationApp(driver, 3);
+	  TB_LB_MortgageApp(driver, 3);*/
+
+	  //TB_LB_EditReallocateOpp(driver, 3);*/
+	/*TB_BP_Calculator_StampDuty_RegTransferFee bp4 = new TB_BP_Calculator_StampDuty_RegTransferFee();
+	bp4.Call(driver);*/
+  } 
+  
+  @AfterMethod
+  public void afterMethod() {
+  }
+
+ 
+
+  @AfterClass
+  public void afterClass() {
+	  
+	  //driver.quit();
+  }
+
+}

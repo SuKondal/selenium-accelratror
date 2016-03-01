@@ -1,0 +1,84 @@
+package com.root;
+
+import static org.testng.AssertJUnit.assertEquals;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+
+public class TB_BP_BrokerNewCC extends LocalBusinessFunctions{
+
+	public TB_BP_BrokerNewCC() throws FileNotFoundException, IOException {
+		super();
+		
+	}
+
+	public void Call(WebDriver driver)
+	{
+		String login="", strCustomer="",strNewCustomer="";
+		String strOpp="Fail";
+		boolean bAppmt=false,bEd=false,bNote=false,bOpp=false;
+
+		try {
+			TB_GG_Report("TB_BP_BrokerNewCC","", false);
+			
+			login=TB_LB_Login(driver,2);
+			TB_LB_SetNames();
+			strCustomer = TB_LB_CustomerSearch(driver,1,true);
+			
+			strNewCustomer = TB_LB_CreateCustomer(driver,1);
+			driver.switchTo().defaultContent();
+			boolean bExist = TB_GG_DoesWebElementExist(driver,By.xpath(prop.getProperty("Btn_CS_SearchAgain")),1000);
+			if(bExist)
+			{	
+				Thread.sleep(5000);
+				driver.findElement(By.xpath(prop.getProperty("Btn_CS_SearchAgain"))).click();
+				Thread.sleep(5000);
+				strCustomer=TB_LB_CustomerSearch(driver,1);
+				
+			}
+			strOpp=TB_LB_CreateOpportunity(driver,1);
+			bAppmt=TB_LB_SetAppointment(driver,1);
+
+			bEd=TB_LB_EditReallocateOpp(driver, 3);
+			bNote = TB_LB_AddOppNote(driver);
+			bOpp = TB_LB_OppStatus(driver);
+			
+					
+			TB_LB_Logout(driver);
+			
+			if(login.equalsIgnoreCase("Pass") && strCustomer.equalsIgnoreCase("Match Found") && strOpp.equalsIgnoreCase("Pass")&& strNewCustomer.equalsIgnoreCase("Pass")  && bAppmt && bNote && bEd && bOpp)
+			 {
+				 TB_GG_Report("Final Test Result for TB_BP_BrokerNewCC","Pass", false);
+			 }
+			 else
+			 {
+				 TB_GG_Report("Final Test Result for TB_BP_BrokerNewCC","Fail", false);
+					
+			 }
+			 TB_GG_Report("","", true);
+		} 
+		
+		catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		
+				
+		assertEquals("Pass", login);
+		assertEquals("Match Found", strCustomer);
+		assertEquals("Pass", strNewCustomer);
+		assertEquals("Pass", strOpp);
+		Assert.assertTrue(bAppmt);
+		Assert.assertTrue(bNote);
+		Assert.assertTrue(bEd);
+		Assert.assertTrue(bOpp);
+	
+	}
+
+
+}

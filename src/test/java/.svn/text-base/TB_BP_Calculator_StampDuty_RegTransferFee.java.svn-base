@@ -1,0 +1,137 @@
+package com.root;
+
+import static org.testng.AssertJUnit.assertEquals;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+/*
+ *  This business process is to verify Stamp duty Registration and Transfer Fee.
+ * It uses 100+ scenarios from  /Test_ToolBox/DataPool/TB_DSL_Calulator_StampRegFee.xls data sheet
+ * for inputs and Expected Values(update this sheet as required).
+ * 
+ * INPUT: 
+ * This scenario requires a customer with an active needs analysis where it already has all green ticks 
+ * as an input to it. 
+ * 
+ * Verify:
+ * 1. Customer in row 10 exists and available to login 2
+ * 2. Given customer has required input for NA
+ * 
+ * output:
+ * 1. StampDuty.xls
+ * 2. Results.xls
+ */
+import org.testng.Assert;
+
+/*
+ * @author skaur
+ * This business process is to verify stamp Duty and Registration + Transfer fee for scenarios and values given in Data Sheet.
+ * For Expected results it loads values from the given data file.
+ * 
+ * INPUT: 
+ * These scenario requires
+ * 1. A customer with an active needs analysis where it already has all green ticks.
+ * 
+ * Before execution verify:
+	 * 1. Customer in row 10 exist and available to login 2
+	 * 2. Given customers have required input for NA
+	 * 3. Run in sets for individual
+ * 
+ * output:
+ *   1. StampDuty.xls
+ *   2.  Results.xls
+ */
+public class TB_BP_Calculator_StampDuty_RegTransferFee extends LocalBusinessFunctions 
+{
+	public TB_BP_Calculator_StampDuty_RegTransferFee() throws FileNotFoundException,
+	IOException 
+	{
+		super();
+
+	}
+
+	public String Call(WebDriver driver)
+	{
+		//boolean bRes = false;
+		String login="", strCustomer="";
+	
+		boolean  bOpp=false,bFinal= true,bENa= false, bCal;
+		
+		try {
+			
+			 TB_GG_Report("TB_BP_Calculator_StampDuty_RegTransferFee","", false);
+		
+			login=TB_LB_Login(driver,2);
+			strCustomer = TB_LB_CustomerSearch(driver,10);// dedicated customer for this test
+			
+			bOpp = TB_LB_OpportunityLink(driver);
+			bENa= TB_LB_EditNA(driver);
+
+			for(int i = 1; i<=114; i++  )
+
+			{	
+				/*if(i%20 == 0)
+				{
+					TB_LB_Logout(driver);
+					login=TB_LB_Login(driver,2);
+					strCustomer = TB_LB_CustomerSearch(driver,10);// dedicated customer for this test
+					bOpp = TB_LB_OpportunityLink(driver);
+					bENa= TB_LB_EditNA(driver);
+				}*/
+				TB_GG_Report("Verify Stamp,Register,Transfer Fee for: "+i,"", true); 
+				bCal = TB_LB_PCR_VerifyStampRegTransfer(driver, i);
+				if(login.equalsIgnoreCase("Pass") && bOpp && bENa && bCal)
+				{	
+				 
+					 TB_GG_Report("Test Result for Given scenario "+ i,"Pass", false);
+				}
+				 	
+				 else
+				 {
+					 bFinal= false;
+					 TB_GG_Report("Test Result for Given scenario "+ i,"Fail", false);
+					 
+				 }	 
+				TB_GG_Click(driver, By.xpath(prop.getProperty("Btn_NA_BackToOpp")), "Back To Opp Page Button");
+				TB_GG_Wait();
+			 	TB_LB_EditNA(driver);
+			}
+			// TB_LB_Logout(driver);
+			 
+			 
+			/*System.out.println("Login: "+login);
+			System.out.println("Search Customer: "+strCustomer);
+			System.out.println("OPP: "+strOpp);
+			System.out.println("Edit Customer: "+bEdit);
+			System.out.println("Appointment: "+bAddNote);*/
+			
+			if(login.equalsIgnoreCase("Pass") && strCustomer.equalsIgnoreCase("Match Found")&& bOpp && bENa && bFinal)	
+			 {
+				 TB_GG_Report("Final Test Result for TB_BP_Calculator_StampDuty_RegTransferFee","Pass", false);
+				 TB_GG_Report("","", true);
+			 }
+			 else
+			 {
+				 
+				 TB_GG_Report("Final Test Result for TB_BP_Calculator_StampDuty_RegTransferFee","Fail", false);
+				 TB_GG_Report("","", true);
+			 }	 
+		} 
+		
+		catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		assertEquals("Pass", login);
+		assertEquals("Match Found", strCustomer);
+		Assert.assertTrue(bOpp);
+		Assert.assertTrue(bENa);
+		Assert.assertTrue(bFinal);
+		
+		return "";
+	}
+}

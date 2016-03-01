@@ -1,0 +1,91 @@
+package com.root;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import org.openqa.selenium.WebDriver;
+/*
+ * FOR BROKER USER
+ * Executing scenarios for applications involving GUARANTOR
+ * :Creating Opportunity 
+ * :Needs Analysis with data from TB_DFL_NeedAnalysisXML.xls file rows.
+ * :Product Search with data from TB_DFL_NeedAnalysisXML.xls file rows.
+ * :Submit Application via Broker Centre
+ * INPUT: 
+ * This scenario requires two existing customers according to the scenario you are running
+ * OUTPUT:
+ * Results.xls
+ */
+public class TB_BP_Broker_Guarantor_Scenarios extends LocalBusinessFunctions
+{
+
+
+	public TB_BP_Broker_Guarantor_Scenarios() throws FileNotFoundException,IOException 
+	{
+		super();
+
+	}
+
+	public void Call(WebDriver driver)
+	{
+		String strFile=TB_GG_SetInputFile("TB_DFL_NeedAnalysisXML.xls");
+		String strBpId;
+		for(int i=16;  i<=36; i++) 
+		{
+			strBpId= TB_GG_ReadXL(i, "BP_ID", strFile);
+			System.out.println(strBpId);
+			if(TB_GG_VerifyExecution(strBpId))
+			{
+				System.out.println("Running: " +strBpId);
+				System.out.println("from row no: " + i);
+				String login="", strCustomer="";
+				String strOpp="Fail";
+				
+				boolean  bNa=false, bPs=false, bApp=false, bBC= false, bAddcust;
+				try 
+				{
+					TB_GG_Report("Broker_Scenario "+ strBpId,"", false);
+					login=TB_LB_Login(driver,2);
+					strCustomer=TB_LB_CustomerSearch(driver, i, false,"TB_DFL_NeedAnalysisXML.xls");
+					strOpp=TB_LB_CreateOpportunity(driver,1);
+				//	TB_LB_OpportunityLink(driver);
+					bAddcust=TB_LB_AddCustomerToOpp(driver, i+1);
+					bNa=TB_LB_JointNeedAnalysis(driver,i,false,"TB_DFL_NeedAnalysisXML.xls");
+					
+					//if(bNa)
+					{	
+						bPs=TB_LB_ProductSearch(driver, i,false, "TB_DFL_NeedAnalysisXML.xls");
+						if(bPs)
+							{
+								bApp = TB_LB_CompleteApp(driver, i,true);
+								bBC= TB_LB_BrokerCentre(driver,strBpId);
+							}
+						}
+					TB_LB_Logout(driver);
+					 if(login.equalsIgnoreCase("Pass") && strCustomer.equalsIgnoreCase("Match Found")&& strCustomer.equalsIgnoreCase("Pass")  && bAddcust && strOpp.equalsIgnoreCase("Pass")  && bNa && bPs && bApp && bBC)
+					 {
+						 TB_GG_Report("Test Result for TB_BP_Broker_Scenario: "+strBpId,"Pass", false);
+					
+					 }
+					 else
+					 {
+						 TB_GG_Report("Test Result for TB_BP_Broker_Scenario: "+strBpId,"Fail", false);
+						 	driver.quit();
+							driver = TB_GG_LaunchApplication();
+						
+					 }
+					 TB_GG_Report("","", true);
+					
+						
+				} 
+				
+				catch (Exception e) 
+				{
+					
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+	}
+
+}

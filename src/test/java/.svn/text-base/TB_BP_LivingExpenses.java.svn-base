@@ -1,0 +1,130 @@
+package com.root;
+
+import static org.testng.AssertJUnit.assertEquals;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+/*
+ * @author skaur
+ * This business process is to verify Living Expenses for all possible results.
+ * It uses **%% all  scenarios for purpose for inputs.
+ * For Expected results it loads values in to arrays given in Product Hub for Living Expenses according to states and number of dependents.
+ * 
+ * INPUT: 
+ * These scenario requires
+ * 1. A customer with an active needs analysis where it already has all green ticks.
+ * 2. A joint applicant with same 
+ * 
+ * Before execution verify:
+ * 1. Customer in row 15 and 16 exist and available to login 2
+ * 2. Given customers have required input for NA
+ * 3. Run in sets for individual and for joint.
+ * 
+ * output:
+ * Results.xls
+ */
+public class TB_BP_LivingExpenses extends LocalBusinessFunctions 
+{
+	public TB_BP_LivingExpenses() throws FileNotFoundException,
+	IOException 
+	{
+		super();
+
+	}
+
+	public  void Call(WebDriver driver)
+	{
+		//boolean bRes = false;
+		String login="", strCustomer="";
+	
+		boolean  bOpp=false,bFinal= true,bENa= false, bCal;
+		
+		try {
+			
+			 TB_GG_Report("TB_BP_LivingExpenses","", false);
+			
+			 
+			 
+			login=TB_LB_Login(driver,2);
+			
+			// comment next for joint
+			strCustomer = TB_LB_CustomerSearch(driver,14);// 14 dedicated customer for this test individual
+			
+			// comment next for individual
+			//strCustomer = TB_LB_CustomerSearch(driver,15);// 15 and 16 dedicated customer for this test joint
+			bOpp = TB_LB_OpportunityLink(driver);
+			bENa= TB_LB_EditNA(driver);
+
+			for(int i =1; i<=40; i++  ) ////73 -184, 185 - 198
+
+			{	
+				System.out.println("Executing for row "+ i);
+				if(i>=40) 
+					{
+						bCal = TB_LB_VerifyAllLivingExp(driver, i,"PCR",true);
+						// skip for immediate next row
+						i++;
+					}
+				else bCal = TB_LB_VerifyAllLivingExp(driver, i,"PCR",false);
+				
+				if(login.equalsIgnoreCase("Pass") && bOpp && bENa && bCal)
+				{	
+				 
+					 TB_GG_Report("Test Result for Given scenario: "+i,"Pass", false);
+				}
+				 	
+				 else
+				 {
+					 bFinal= false;
+					 TB_GG_Report("Test Result for Given scenario: "+i,"Fail", false);
+					 
+				 }
+				TB_GG_Click(driver, By.xpath(prop.getProperty("Btn_NA_BackToOpp")), "Back To Opp Page Button");
+				TB_GG_Wait();
+			 	TB_LB_EditNA(driver);
+			}
+			
+			// TB_LB_Logout(driver);
+			 
+			 
+			/*System.out.println("Login:"+login);
+			System.out.println("Search Customer:"+strCustomer);
+			System.out.println("OPP:"+strOpp);
+			System.out.println("Edit Customer"+bEdit);
+			System.out.println("Appointment:"+bAddNote);*/
+			
+			if(login.equalsIgnoreCase("Pass") && strCustomer.equalsIgnoreCase("Match Found")&& bOpp && bENa && bFinal)
+				
+			 {
+				 TB_GG_Report("Final Test Result for TB_BP_LivingExpenses","Pass", false);
+				 TB_GG_Report("","", true);
+			 }
+			 	
+			 else
+			 {
+				 
+				 TB_GG_Report("Final Test Result for TB_BP_LivingExpenses","Fail", false);
+				 TB_GG_Report("","", true);
+			 }	 
+		} 
+		
+		catch (Exception e) {
+			
+			e.printStackTrace();
+			System.out.println();
+		}
+		
+		assertEquals("Pass", login);
+		assertEquals("Match Found", strCustomer);
+		Assert.assertTrue(bOpp);
+		Assert.assertTrue(bENa);
+		Assert.assertTrue(bFinal);
+		
+		
+		
+	}
+}

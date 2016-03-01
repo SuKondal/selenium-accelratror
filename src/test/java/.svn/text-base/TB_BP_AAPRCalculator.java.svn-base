@@ -1,0 +1,152 @@
+package com.root;
+
+import static org.testng.AssertJUnit.assertEquals;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+/*
+ * INPUT: 
+ * These scenario requires
+ * 1. A customer with an active needs analysis where it already has all green ticks and income not less than **********.
+ * 
+ * 
+ * Before execution verify:
+ * 1. Customer in row 11 exists and available to login 2
+ * 2. Given customer has required input for NA
+ * 
+ * output:
+ * Results.xls
+ */
+public class TB_BP_AAPRCalculator extends LocalBusinessFunctions{
+
+	public TB_BP_AAPRCalculator() throws FileNotFoundException, IOException {
+		super();
+		
+	}
+
+	public void Call(WebDriver driver)
+	{
+		
+		TB_GG_Report("TB_BP_AAPRCalculator","", false);
+		String login, strCustomer="";
+		boolean bOpp=false, bENa=false,bPs=false,bfinal= true;
+		
+		double dAAprCal;
+		DecimalFormat df = new DecimalFormat("#.####");
+		String strFile=TB_GG_SetInputFile("TB_DFL_CreateProduct.xls");
+
+		
+
+		
+		
+	login=TB_LB_Login(driver,2);
+		strCustomer = TB_LB_CustomerSearch(driver,11);// 11 is a dedicated customer for this test
+		bOpp = TB_LB_OpportunityLink(driver);
+		TB_GG_Wait();
+		for(int p=13; p<=19; p++)
+		{
+			TB_GG_Wait(7000);
+			if(TB_GG_DoesWebElementExist(driver, By.xpath(prop.getProperty("Img_AP_UnlockNA")),15000))
+			 { 
+				 	
+				 	TB_GG_Click(driver, By.xpath(prop.getProperty("Img_AP_UnlockNA")), "Unlock Need Analysis");
+				 	TB_GG_Wait();
+				 	 if(TB_GG_DoesWebElementExist(driver, By.xpath(prop.getProperty("Img_AP_UnlockNA")),5000))
+				 	 {
+				 		 System.out.println("Clicked lock again");
+				 		TB_GG_Click(driver, By.xpath(prop.getProperty("Img_AP_UnlockNA")), "Unlock Need Analysis");
+				 		TB_GG_WaitAnElementDisappears(driver,By.tagName("img").name("/images/ajax-loader.gif"),30000);
+				 	 }
+			 }	 
+			// if(TB_GG_FindElement(driver.findElement(By.id(prop.getProperty("Tba_AP_NAEditID"))),By.xpath(prop.getProperty("Img_AP_EditNA")), intTimeOut)!= null)
+			 
+			bENa=TB_LB_EditNA(driver);
+			TB_GG_Wait();
+			 if(bENa)
+			 {
+				 //TB_GG_WaitAnElementDisappears(driver,By.tagName("img").name("/images/bigloading.gif"),10000);
+				 if(TB_GG_DoesWebElementExist(driver,By.xpath(prop.getProperty("Btn_NA_BackToOpp")), 5000))
+				 {
+					 String amt = TB_GG_ReadXL(p, "Ed_NA_TotLaonAmount", strFile);
+					 TB_GG_Input(driver, By.xpath(prop.getProperty("Ed_NA_TotLaonAmount")), "Loan Amount:", amt);
+					//Estimated Funds To Complete
+					 TB_GG_Click(driver,By.xpath(prop.getProperty("Btn_NA_EstFunds")), "Estimated Funds To Complete");
+						
+					//PreliminaryCapacityToRepay
+					TB_GG_Wait(7000);
+					TB_GG_WaitAnElementDisappears(driver,By.tagName("img").name("/images/bigloading.gif"),30000);
+					TB_GG_Click(driver,By.id("PreliminaryCapacityToRepayId"),"Preliminary Capacity To Repay");	
+					TB_GG_Wait();
+					TB_GG_WaitAnElementDisappears(driver,By.tagName("img").name("/images/bigloading.gif"),30000);
+					//verify the product search button is enabled
+					if(driver.findElement(By.xpath(prop.getProperty("Btn_PS"))).isEnabled())
+					{
+						bPs=TB_LB_ProductSearch(driver, 6,true);
+						dAAprDisplayed=TB_LB_ClickProduct( driver,p);
+						String strProduct = TB_GG_ReadXL(p, "Ed_PM_ProuctInstance", strFile);
+					
+						dAAprCal=TB_LB_AAPRCalculator( driver, p);
+					
+						if(df.format(dAAprDisplayed).equals(df.format(dAAprCal)) && bPs)
+						{
+							TB_GG_Report(strProduct+"- Expected AAPR :"+df.format(dAAprCal)+ "Actual AAPR :"+df.format(dAAprDisplayed) ,"Pass", false);
+							System.out.println("Success AAPR");
+						}
+						else 
+						{
+							bfinal= false;
+							TB_GG_Report(strProduct+"- Expected AAPR :"+df.format(dAAprCal)+ "Actual AAPR :"+df.format(dAAprDisplayed) ,"Fail", false);
+							System.out.println("Wrong AAPR"); //2-b1
+						}
+						System.out.println("Displayed : " +df.format(dAAprDisplayed));
+						System.out.println("Calculated : " +df.format(dAAprCal));
+					 
+					
+						TB_GG_Click(driver, By.xpath(prop.getProperty("Btn_AP_BackToNA")), "Back To NA Page Button");
+						TB_GG_Wait(7000);
+						TB_GG_Click(driver, By.xpath(prop.getProperty("Btn_NA_BackToOpp")), "Back To Opp Page Button");
+						TB_GG_WaitAnElementDisappears(driver,By.tagName("img").name("/images/ajax-loader.gif"),30000);// <img src="/images/ajax-loader.gif"/>
+						//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(prop.getProperty("Img_AP_UnlockNA"))));
+					}
+					else
+					{
+							TB_GG_Report("Product Search is not enabled","Fail", true);
+					}
+				 }	 	 
+			 }
+			 else
+			 {
+				 TB_GG_Report("Needs Analysis","Fail", true); 
+			 }
+			
+		}
+		
+		
+
+		
+		if(login.equalsIgnoreCase("Pass") && strCustomer.equalsIgnoreCase("Match Found")&& bOpp  && bfinal)
+			
+		 {
+			 TB_GG_Report("Final Test Result for TB_BP_AAPRCalculator","Pass", false);
+			 TB_GG_Report("","", true);
+		 }
+		 	
+		 else
+		 {
+			 
+			 TB_GG_Report("Final Test Result for TB_BP_AAPRCalculator","Fail", false);
+			 TB_GG_Report("","", true);
+		 }
+		assertEquals("Pass", login);
+		assertEquals("Match Found", strCustomer);
+		Assert.assertTrue(bOpp);
+		Assert.assertTrue(bfinal);
+	}
+
+}
+
+

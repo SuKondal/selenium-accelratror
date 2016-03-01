@@ -1,0 +1,92 @@
+package com.root;
+
+import static org.testng.AssertJUnit.assertEquals;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+/*
+ * FOR CALL CENTRE USER
+ * This business process is to verify New PERSONAL customer for 
+ * Creating Customer
+ * Creating Opportunity 
+ * Allocating -NO COTR  
+ * Add Note and Via CSR 
+ * 
+ * INPUT: 
+ * This scenario requires an existing customer with an existing opportunity as input
+ * OUTPUT:
+ * Results.xls
+ */
+public class TB_BP_CallCentreNewPC_Allocate_NoCOTR extends LocalBusinessFunctions{
+
+	public TB_BP_CallCentreNewPC_Allocate_NoCOTR() throws FileNotFoundException, IOException {
+		super();
+	
+	}
+
+	public void Call(WebDriver driver)
+	{
+		String login="", strCustomer="",newCust="";
+		String strOpp="Fail";
+		boolean bNote=false,bOpp=false,bEr=false;
+		try {
+			 TB_GG_Report("TB_BP_CallCentreNewPC_Allocate_NoCOTR","", false);
+			
+			
+			login=TB_LB_Login(driver,5);
+			TB_LB_SetNames();
+			strCustomer = TB_LB_CustomerSearch(driver,2,true);
+			newCust = TB_LB_CreateCustomer(driver,5); //4-Self Generated //5-Company Generated
+			driver.switchTo().defaultContent();
+			boolean bExist = TB_GG_DoesWebElementExist(driver,By.xpath(prop.getProperty("Btn_CS_SearchAgain")),1000);
+			if(bExist)
+			{	
+				Thread.sleep(5000);
+				driver.findElement(By.xpath(prop.getProperty("Btn_CS_SearchAgain"))).click();
+				Thread.sleep(5000);
+				strCustomer=TB_LB_CustomerSearch(driver,2);
+				
+			}
+			strOpp=TB_LB_CreateOpportunity(driver,1);
+			TB_GG_Wait();
+			bEr=TB_LB_EditReallocateOpp(driver, 2);   //allocate to a broker from same branch: NO COTR
+			TB_GG_Wait();
+			bNote = TB_LB_AddOppNote(driver);
+			
+			 TB_LB_Logout(driver);
+			 
+			 if(login.equalsIgnoreCase("Pass") && strCustomer.equalsIgnoreCase("Match Found") &&  strOpp.equalsIgnoreCase("Pass")&& bOpp && bEr && bNote)
+				 TB_GG_Report("Final Test Result for TB_BP_CallCentreNewPC_Allocate_NoCOTR","Pass", false);
+				 else
+					 TB_GG_Report("Final Test Result for TB_BP_CallCentreNewPC_Allocate_NoCOTR","Fail", false);
+			 TB_GG_Report("","", true);
+		
+		
+		}
+		catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		 assertEquals("Pass", login);
+			assertEquals("Match Found", strCustomer);
+			assertEquals("Pass", newCust);
+			Assert.assertTrue(bOpp);
+			Assert.assertTrue(bNote);
+			Assert.assertTrue(bEr); 
+			
+		
+	}
+
+
+}
+
+
+
+
+
+

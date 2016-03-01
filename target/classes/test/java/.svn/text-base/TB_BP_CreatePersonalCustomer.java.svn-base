@@ -1,0 +1,60 @@
+package com.root;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+public class TB_BP_CreatePersonalCustomer extends LocalBusinessFunctions{
+
+	public TB_BP_CreatePersonalCustomer() throws FileNotFoundException, IOException {
+		super();
+		
+	}
+	
+	public void Call(WebDriver driver)
+	{
+		String login="", strCustomer="";
+		login=TB_LB_Login(driver,2);
+		for(int i = 1; i<=11; i++)
+		{
+			try {
+				TB_GG_Report("TB_BP_CreatePersonalCustomer "+i,"", false);
+				
+				TB_LB_SetNames();
+				
+				strCustomer = TB_LB_CustomerSearch(driver,2,true);
+				TB_LB_CreateCustomer(driver,1);
+				driver.switchTo().defaultContent();
+				boolean bExist = TB_GG_DoesWebElementExist(driver,By.xpath(prop.getProperty("Btn_CS_SearchAgain")),1000);
+				if(bExist)
+				{	
+					Thread.sleep(5000);
+					driver.findElement(By.xpath(prop.getProperty("Btn_CS_SearchAgain"))).click();
+					Thread.sleep(5000);
+					strCustomer=TB_LB_CustomerSearch(driver,2);
+					driver.findElement(By.xpath(prop.getProperty("Btn_CS_SearchAgain"))).click();
+
+				}
+				//if(strCustomer.equalsIgnoreCase("Match Found"))
+			//	TB_GG_WriteOpportunityNumber("TB_BP_CreatePersonalCustomer"+i, strGenFName +" "+strGenLName);
+				 if(login.equalsIgnoreCase("Pass") && strCustomer.equalsIgnoreCase("Match Found") )
+					 TB_GG_Report("Final Test Result for TB_BP_CreateCustomer " + i,"Pass", false);
+					 else
+						 TB_GG_Report("Final Test Result for TB_BP_CreatePersonalCustomer "+ i,"Fail", false);
+				 TB_GG_Report("","", true);
+		
+			}
+		
+		
+	        catch (Exception e) 
+	        {
+				
+				e.printStackTrace();
+			}
+		}
+		TB_LB_Logout(driver);
+	}
+	
+}
